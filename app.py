@@ -1,6 +1,6 @@
-from flask import Flask, request
+from flask import Flask
 
-from api_utils import player_profile
+from api_utils import player_profile, player_profiles_by_id
 
 app = Flask(__name__)
 
@@ -12,7 +12,10 @@ def welcome():
 def get_player_bio():
     return player_profile()
 
-
+@app.route('/players/<player_id>')
+def player_bio_by_id(player_id):
+    list_of_ids = player_id.split(',')
+    return player_profiles_by_id(list_of_ids)
 
 
 if __name__ == "__main__":

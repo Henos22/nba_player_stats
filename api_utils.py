@@ -37,3 +37,17 @@ def create_player_bio_dict(player:pd.DataFrame) -> dict:
         'age':player['age'],
         'team':player['team']
     }
+
+def player_profiles_by_id(ids: list) -> list:
+    """Gets the bios of players who have been requested by id
+
+    Args:
+        ids (list): list of player ids
+
+    Returns:
+        list: list of the selected players' bios 
+    """
+    all_bios = player_profile()
+    list_of_ids = [int(id) for id in ids]
+    requested_bios = [bio for bio in all_bios if bio['player_id'] in list_of_ids]
+    return requested_bios
