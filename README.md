@@ -12,4 +12,4 @@ To test the API locally, run the following commands:
 - docker build -f api.Dockerfile . -t nba
 - docker run -p 8080:8080 -t nba
 
-At this point, the Flask application will be running in the Docker container and the user can find the API at 0.0.0.0:8080.
+At this point, the Flask application will be running in the Docker container and the user can find the API at 0.0.0.0:8080
