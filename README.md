@@ -11,7 +11,8 @@
 This is an API displaying player stats for the 2022-2023 NBA season.  
 Endpoints include:  
 - '/players' endpoint provides a bio for every player in the NBA 
-- '/players/<id>' endpoint where users can search for a specific player by their player_id as well as deleting a specific player by their id 
+- '/players/<id>' endpoint where users can search for a specific player by their player_id 
+  as well as deleting a specific player by their id 
 - '/offense' endpoint provides an overview of every player's offensive stats (shooting, assists etc) 
 - '/defense' endpoint provides an overview of every player's defensive stats (e.g. steals, blocks, rebounds etc)
 
