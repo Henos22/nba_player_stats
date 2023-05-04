@@ -9,17 +9,6 @@ def load_nba_data() -> pd.DataFrame:
     """
     return pd.read_csv('22:23_player_stats.csv')
 
-def player_profile() -> list:
-    """Creates a list of dictionaries containing player bio data
-
-    Returns:
-        list: list of player data
-    """
-    df = load_nba_data()
-    player_df = df.filter(regex = "rank|player|position|age|team")
-    players_bio = [create_player_bio_dict(player) for i,player in player_df.iterrows()]
-    return players_bio
-
 def create_player_bio_dict(player:pd.DataFrame) -> dict:
     """Formats data that would be present in a player's bio
 
@@ -38,6 +27,19 @@ def create_player_bio_dict(player:pd.DataFrame) -> dict:
         'team':player['team']
     }
 
+def player_profile() -> list:
+    """Creates a list of dictionaries containing player bio data
+
+    Returns:
+        list: list of player data
+    """
+    df = load_nba_data()
+    player_df = df.filter(regex = "rank|player|position|age|team")
+    players_bio = [create_player_bio_dict(player) for i,player in player_df.iterrows()]
+    return players_bio
+
+player_profiles = player_profile()
+
 def player_profiles_by_id(ids: list) -> list:
     """Gets the bios of players who have been requested by id
 
@@ -47,7 +49,7 @@ def player_profiles_by_id(ids: list) -> list:
     Returns:
         list: list of the selected players' bios 
     """
-    all_bios = player_profile()
+    all_bios = player_profiles
     list_of_ids = [int(id) for id in ids]
     requested_bios = [bio for bio in all_bios if bio['player_id'] in list_of_ids]
     return requested_bios
@@ -103,8 +105,10 @@ def player_offense_stats() -> list:
     """
     df = load_nba_data()
     player_df = df.filter(regex = "player|games|mins_played|FG|FGA|FG%|3P|3PA|3P%|2P|2PA|2P%|eFG%|FT|FTA|FT%|points|AST")
-    players_bio = [create_player_offense_dict(player) for i,player in player_df.iterrows()]
-    return players_bio
+    players_offense = [create_player_offense_dict(player) for i,player in player_df.iterrows()]
+    return players_offense
+
+players_offense = player_offense_stats()
 
 def create_player_defense_dict(player: pd.DataFrame) -> dict:
     """Formats a player's defensive stats
@@ -153,5 +157,23 @@ def player_defense_stats() -> list:
     """
     df = load_nba_data()
     player_df = df.filter(regex = "player|games|mins_played|ORB|DRB|TRB|STL|BLK|TOV|fouls")
-    players_bio = [create_player_defense_dict(player) for i,player in player_df.iterrows()]
-    return players_bio
+    players_defense = [create_player_defense_dict(player) for i,player in player_df.iterrows()]
+    return players_defense  
+
+players_defense = player_defense_stats()
+
+def delete_players(ids: list) -> list:
+    """Removes the bios of the players that have been selected in the DELETE request
+
+    Args:
+        id (list): ids of the players to be removed
+
+    Returns:
+        list: players remaining
+    """
+    players = player_profiles
+    for id in ids:
+        for player in players.copy():
+            if player.get('player_id') == int(id):
+                players.remove(player)
+    return f"Rides with ride ids for {ids} have been deleted"
