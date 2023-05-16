@@ -10,4 +10,6 @@ COPY . .
 
 ENV PYTHONUNBUFFERED True
 
+EXPOSE 80
+
 CMD python3 app.py
